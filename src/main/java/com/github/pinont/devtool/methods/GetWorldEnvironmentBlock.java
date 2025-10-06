@@ -1,4 +1,4 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.methods;
 
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Utility methods for getting world environment blocks.
  */
-public class getWorldEnvironmentBlock {
+public class GetWorldEnvironmentBlock {
 
     public static ItemStack getWorldEnvironmentBlock(World world) {
         return getWorldEnvironmentBlock(world.getEnvironment());

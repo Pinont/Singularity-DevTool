@@ -1,6 +1,6 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.methods;
 
-import com.github.pinont.devtool.menu.showWorldCreator;
+import com.github.pinont.devtool.menu.submenu.WorldCreatorMenu;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
@@ -15,12 +15,12 @@ import static com.github.pinont.singularitylib.plugin.CorePlugin.getInstance;
 /**
  * Creates and returns the world creator menu with specified parameters.
  */
-public class getWorldCreatorMenu {
+public class GetWorldCreatorMenu {
 
     public static Menu getWorldCreatorMenu(String name, World.Environment environment, WorldType worldType, boolean generate_structure, int borderSize, Difficulty difficulty, Long seed) {
         Menu worldCreatorMenu = new Menu("World Creator").setLayout("----w----", "-=n=e=t=-", "-=g=b=s=-", "----c----");
         return worldCreatorMenu.setKey(
-                blank.blank(),
+                Blank.getLayout(),
                 new Layout() {
                     @Override
                     public char getKey() {
@@ -68,7 +68,7 @@ public class getWorldCreatorMenu {
                             public void onClick(Player player) {
                                 player.closeInventory();
                                 player.sendMessage(ChatColor.YELLOW + "World '" + name + "' is Creating...");
-                                createWorld.createWorld(name, environment, worldType, generate_structure, borderSize, difficulty, seed);
+                                CreateWorld.createWorld(name, environment, worldType, generate_structure, borderSize, difficulty, seed);
                                 player.sendMessage(ChatColor.GREEN + "World '" + name + "' has been created!");
                             }
                         };
@@ -154,7 +154,7 @@ public class getWorldCreatorMenu {
                                 if (environment == null) {
                                     return new ItemCreator(Material.COMMAND_BLOCK).setName("Set World Environment").addLore(ChatColor.YELLOW + "Click to change world environment.").create();
                                 }
-                                return new ItemCreator(getWorldEnvironmentBlock.getWorldEnvironmentBlock(environment)).setName(environment.name()).addLore(ChatColor.YELLOW + "Click to change world environment.").create();
+                                return new ItemCreator(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(environment)).setName(environment.name()).addLore(ChatColor.YELLOW + "Click to change world environment.").create();
                             }
 
                             @Override
@@ -162,7 +162,7 @@ public class getWorldCreatorMenu {
                                 World.Environment[] environments = World.Environment.values();
                                 int currentIndex = environment == null ? -1 : java.util.Arrays.asList(environments).indexOf(environment);
                                 int nextIndex = (currentIndex + 1) % environments.length;
-                                showWorldCreator.showWorldCreator(player, name, environments[nextIndex], worldType, generate_structure, borderSize, difficulty, seed);
+                                WorldCreatorMenu.showWorldCreator(player, name, environments[nextIndex], worldType, generate_structure, borderSize, difficulty, seed);
                             }
                         };
                     }
@@ -190,7 +190,7 @@ public class getWorldCreatorMenu {
                                 int currentTypeIndex = worldType == null ? -1 : java.util.Arrays.asList(worldTypes).indexOf(worldType);
                                 int nextTypeIndex = (currentTypeIndex + 1) % worldTypes.length;
 
-                                showWorldCreator.showWorldCreator(player, name, environment, worldTypes[nextTypeIndex], generate_structure, borderSize, difficulty, seed);
+                                WorldCreatorMenu.showWorldCreator(player, name, environment, worldTypes[nextTypeIndex], generate_structure, borderSize, difficulty, seed);
                             }
                         };
                     }
@@ -212,7 +212,7 @@ public class getWorldCreatorMenu {
 
                             @Override
                             public void onClick(Player player) {
-                                showWorldCreator.showWorldCreator(player, name, environment, worldType, !generate_structure, borderSize, difficulty, seed);
+                                WorldCreatorMenu.showWorldCreator(player, name, environment, worldType, !generate_structure, borderSize, difficulty, seed);
                             }
                         };
                     }
@@ -361,7 +361,7 @@ public class getWorldCreatorMenu {
                             public void onClick(Player player) {
                                 player.closeInventory();
                                 player.sendMessage(ChatColor.YELLOW + "World '" + name + "' is Creating...");
-                                createWorld.createWorld(name, environment, worldType, generate_structure, borderSize, difficulty, seed);
+                                CreateWorld.createWorld(name, environment, worldType, generate_structure, borderSize, difficulty, seed);
                                 player.sendMessage(ChatColor.GREEN + "World '" + name + "' has been created!");
                             }
                         };

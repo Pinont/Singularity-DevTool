@@ -1,6 +1,6 @@
-package com.github.pinont.devtool.menu;
+package com.github.pinont.devtool.menu.submenu;
 
-import com.github.pinont.devtool.utils.blank;
+import com.github.pinont.devtool.methods.Blank;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.items.ItemHeadCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
@@ -13,12 +13,12 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Shows the kick player approval confirmation dialog.
  */
-public class showKickPlayerApproval {
+public class KickPlayerApprovalMenu {
 
     public static void showKickPlayerApproval(Player origin, Player target) {
         new Menu(ChatColor.RED + "Are you sure to kick " + target.getName() + "?", 9 * 5)
                 .setLayout("=========", "====p====", "=========", "==a===d==", "=========")
-                .setKey(blank.blank(),
+                .setKey(Blank.getLayout(),
                         new Layout() {
                             @Override
                             public char getKey() {
@@ -57,7 +57,7 @@ public class showKickPlayerApproval {
                                     @Override
                                     public void onClick(Player player) {
                                         target.kick();
-                                        showServerPlayerManager.showServerPlayerManager(origin);
+                                        ServerPlayerManagerMenu.showServerPlayerManager(origin);
                                     }
                                 };
                             }
@@ -78,7 +78,7 @@ public class showKickPlayerApproval {
 
                                     @Override
                                     public void onClick(Player player) {
-                                        showSpecificPlayerManager.showSpecificPlayerManager(player, target);
+                                        SpecificPlayerManagerMenu.showSpecificPlayerManager(player, target);
                                     }
                                 };
                             }

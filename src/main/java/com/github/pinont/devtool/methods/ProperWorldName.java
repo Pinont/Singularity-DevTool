@@ -1,11 +1,11 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.methods;
 
 import org.bukkit.World;
 
 /**
  * Utility method for formatting world names properly.
  */
-public class properWorldName {
+public class ProperWorldName {
 
     public static String properWorldName(World world) {
         String formattedName = world.getName().replace("_", " ");

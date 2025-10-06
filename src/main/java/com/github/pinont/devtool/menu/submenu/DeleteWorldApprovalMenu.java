@@ -1,8 +1,9 @@
-package com.github.pinont.devtool.menu;
+package com.github.pinont.devtool.menu.submenu;
 
-import com.github.pinont.devtool.utils.blank;
+import com.github.pinont.devtool.methods.Blank;
+import com.github.pinont.devtool.methods.GetWorldEnvironmentBlock;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
-import com.github.pinont.singularitylib.api.items.ItemHeadCreator;
+import com.github.pinont.singularitylib.api.manager.WorldManager;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
 import com.github.pinont.singularitylib.api.ui.Menu;
@@ -10,21 +11,19 @@ import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Date;
-
 /**
- * Shows the ban player approval confirmation dialog.
+ * Shows the delete world approval confirmation dialog.
  */
-public class showBanPlayerApproval {
+public class DeleteWorldApprovalMenu {
 
-    public static void showBanPlayerApproval(Player origin, Player target) {
-        new Menu(ChatColor.RED + "Are you sure to ban " + target.getName() + "?", 9 * 5)
-                .setLayout("=========", "====p====", "=========", "==a===d==", "=========")
-                .setKey(blank.blank(),
+    public static void showDeleteWorldApproval(Player player, World targetWorld) {
+        new Menu(ChatColor.RED + "Are you sure to delete " + targetWorld.getName() + "?")
+                .setLayout("=========", "====w====", "=========", "==a===d==", "=========")
+                .setKey(Blank.getLayout(),
                         new Layout() {
                             @Override
                             public char getKey() {
-                                return 'p';
+                                return 'w';
                             }
 
                             @Override
@@ -32,7 +31,7 @@ public class showBanPlayerApproval {
                                 return new Button() {
                                     @Override
                                     public ItemStack getItem() {
-                                        return new ItemHeadCreator(new ItemStack(Material.PLAYER_HEAD)).setOwner(target.getName()).setName(ChatColor.RED + "Are you sure to ban " + target.getName() + "?").create();
+                                        return new ItemCreator(new ItemStack(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(targetWorld))).setName(ChatColor.RED + "Are you sure to delete " + targetWorld.getName() + "?").create();
                                     }
 
                                     @Override
@@ -58,8 +57,9 @@ public class showBanPlayerApproval {
 
                                     @Override
                                     public void onClick(Player player) {
-                                        target.ban("You have been banned from this server.", (Date) null, player.getName(), true);
-                                        showServerPlayerManager.showServerPlayerManager(origin);
+                                        WorldManager.delete(targetWorld.getName());
+                                        player.sendMessage(ChatColor.RED + targetWorld.getName() + " is now mark for removal!");
+                                        ServerWorldMangerMenu.showServerWorldManger(player);
                                     }
                                 };
                             }
@@ -80,11 +80,11 @@ public class showBanPlayerApproval {
 
                                     @Override
                                     public void onClick(Player player) {
-                                        showSpecificPlayerManager.showSpecificPlayerManager(player, target);
+                                        SingleWorldManagerMenu.showSingleWorldManager(targetWorld, player);
                                     }
                                 };
                             }
                         }
-                ).show(origin);
+                ).show(player);
     }
 }

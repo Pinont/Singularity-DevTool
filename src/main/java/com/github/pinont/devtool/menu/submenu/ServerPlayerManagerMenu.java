@@ -1,4 +1,4 @@
-package com.github.pinont.devtool.menu;
+package com.github.pinont.devtool.menu.submenu;
 
 import com.github.pinont.singularitylib.api.items.ItemHeadCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Shows the server player manager interface.
  */
-public class showServerPlayerManager {
+public class ServerPlayerManagerMenu {
 
     public static void showServerPlayerManager(Player origin) {
         Menu playerManager = new Menu("Player Manager", 9); // temp
@@ -31,7 +31,7 @@ public class showServerPlayerManager {
 
                 @Override
                 public void onClick(Player player) {
-                    showSpecificPlayerManager.showSpecificPlayerManager(origin, player);
+                    SpecificPlayerManagerMenu.showSpecificPlayerManager(origin, player);
                 }
             });
         }

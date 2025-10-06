@@ -1,6 +1,6 @@
-package com.github.pinont.devtool.menu;
+package com.github.pinont.devtool.menu.submenu;
 
-import com.github.pinont.devtool.utils.blank;
+import com.github.pinont.devtool.methods.Blank;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
 import com.github.pinont.singularitylib.api.ui.Menu;
@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 /**
  * Shows other development tools in a menu interface.
  */
-public class showOtherTools {
+public class OtherToolsMenu {
 
     public static void showOtherTools(Player player) {
         new Menu("Heldable Tool", 9 * 3).setLayout("=========", "==m=w=o==", "=========").setKey(
-                blank.blank(),
+                Blank.getLayout(),
                 new Layout() {
                     @Override
                     public char getKey() {

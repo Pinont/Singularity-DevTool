@@ -1,6 +1,6 @@
-package com.github.pinont.devtool.menu;
+package com.github.pinont.devtool.menu.submenu;
 
-import com.github.pinont.devtool.utils.blank;
+import com.github.pinont.devtool.methods.Blank;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.items.ItemHeadCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
@@ -13,13 +13,13 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Shows the specific player manager interface for managing a particular player.
  */
-public class showSpecificPlayerManager {
+public class SpecificPlayerManagerMenu {
 
     public static void showSpecificPlayerManager(Player origin, Player target) {
         Menu playerManager = new Menu("Player Manager", 9 * 5);
         playerManager.setLayout("====p====", "=========", "==t=i=o==", "==b=k=n==", "====v====", "=========");
         playerManager.setKey(
-                blank.blank(),
+                Blank.getLayout(),
                 new Layout() {
                     @Override
                     public char getKey() {
@@ -95,7 +95,7 @@ public class showSpecificPlayerManager {
 
                             @Override
                             public void onClick(Player player) {
-                                showBanPlayerApproval.showBanPlayerApproval(player, target);
+                                BanPlayerApprovalMenu.showBanPlayerApproval(player, target);
                             }
                         };
                     }
@@ -116,7 +116,7 @@ public class showSpecificPlayerManager {
 
                             @Override
                             public void onClick(Player player) {
-                                showKickPlayerApproval.showKickPlayerApproval(player, target);
+                                KickPlayerApprovalMenu.showKickPlayerApproval(player, target);
                             }
                         };
                     }

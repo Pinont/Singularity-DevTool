@@ -1,4 +1,4 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.methods;
 
 import org.bukkit.Difficulty;
 import org.bukkit.World;

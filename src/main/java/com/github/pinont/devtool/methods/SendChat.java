@@ -1,6 +1,6 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.methods;
 
-import com.github.pinont.devtool.menu.showWorldCreator;
+import com.github.pinont.devtool.menu.submenu.WorldCreatorMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
@@ -11,7 +11,7 @@ import static com.github.pinont.singularitylib.plugin.CorePlugin.getInstance;
  * Handles player chat events for world creator input.
  * Processes user input for world creation parameters when players are in world creator mode.
  */
-public class sendChat {
+public class SendChat {
 
     /**
      * Handles player chat events for world creator input.
@@ -30,7 +30,7 @@ public class sendChat {
             event.setCancelled(true);
             switch (worldCreatorContent.getInputContent()) {
                 case "worldName": {
-                    showWorldCreator.showWorldCreator(player, event.getMessage(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
+                    WorldCreatorMenu.showWorldCreator(player, event.getMessage(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
                     break;
                 }
                 case "worldBorder": {
@@ -38,23 +38,23 @@ public class sendChat {
                         int borderSize = Integer.parseInt(event.getMessage());
                         if (borderSize <= 0) {
                             player.sendMessage(ChatColor.RED + "World border size must be greater than 0");
-                            showWorldCreator.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
+                            WorldCreatorMenu.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
                             return;
                         }
-                        showWorldCreator.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), borderSize, worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
+                        WorldCreatorMenu.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), borderSize, worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
                     } catch (NumberFormatException e) {
                         player.sendMessage(ChatColor.RED + "World border size must be a number.");
-                        showWorldCreator.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
+                        WorldCreatorMenu.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
                     }
                     break;
                 }
                 case "worldSeed": {
                     try {
                         long seed = Long.parseLong(event.getMessage());
-                        showWorldCreator.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), seed);
+                        WorldCreatorMenu.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), seed);
                     } catch (NumberFormatException e) {
                         player.sendMessage(ChatColor.RED + "World border size must be a number.");
-                        showWorldCreator.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
+                        WorldCreatorMenu.showWorldCreator(player, worldCreatorContent.getWorldName(), worldCreatorContent.getEnvironment(), worldCreatorContent.getWorldType(), worldCreatorContent.getGenerateStructure(), worldCreatorContent.getBorderSize(), worldCreatorContent.getDifficulty(), worldCreatorContent.getSeed());
                     }
                     break;
                 }

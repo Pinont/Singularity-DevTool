@@ -1,6 +1,6 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.methods;
 
-import com.github.pinont.devtool.menu.showDeleteWorldApproval;
+import com.github.pinont.devtool.menu.submenu.DeleteWorldApprovalMenu;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Creates a delete button for world management.
  */
-public class worldDeleteButton {
+public class WorldDeleteButton {
 
     public static Layout worldDeleteButton(World world) {
         if (world.hasMetadata("loader")) {
@@ -31,7 +31,7 @@ public class worldDeleteButton {
 
                         @Override
                         public void onClick(Player player) {
-                            showDeleteWorldApproval.showDeleteWorldApproval(player, world);
+                            DeleteWorldApprovalMenu.showDeleteWorldApproval(player, world);
                         }
                     };
                 }

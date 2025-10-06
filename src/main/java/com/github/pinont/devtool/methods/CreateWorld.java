@@ -1,4 +1,4 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.methods;
 
 import com.github.pinont.singularitylib.api.manager.WorldManager;
 import org.bukkit.Difficulty;
@@ -8,7 +8,7 @@ import org.bukkit.WorldType;
 /**
  * Creates a new world with specified parameters.
  */
-public class createWorld {
+public class CreateWorld {
 
     public static void createWorld(String name, World.Environment environment, WorldType worldType, boolean generate_structure, int borderSize, Difficulty difficulty, Long seed) {
         if (name == null) {

@@ -1,9 +1,9 @@
-package com.github.pinont.devtool.menu;
+package com.github.pinont.devtool.menu.submenu;
 
-import com.github.pinont.devtool.utils.blank;
-import com.github.pinont.devtool.utils.getWorldEnvironmentBlock;
-import com.github.pinont.devtool.utils.properWorldName;
-import com.github.pinont.devtool.utils.worldDeleteButton;
+import com.github.pinont.devtool.methods.Blank;
+import com.github.pinont.devtool.methods.GetWorldEnvironmentBlock;
+import com.github.pinont.devtool.methods.ProperWorldName;
+import com.github.pinont.devtool.methods.WorldDeleteButton;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
@@ -15,13 +15,13 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Shows the single world manager interface for a specific world.
  */
-public class showSingleWorldManager {
+public class SingleWorldManagerMenu {
 
     public static void showSingleWorldManager(World world, Player player) {
         Menu worldManagerMenu = new Menu(world.getName() + ": World Manager");
         worldManagerMenu.setLayout("=========", "====w====", "=========", "==t=d=r==", "=========");
         worldManagerMenu.setKey(
-                blank.blank(),
+                Blank.getLayout(),
                 new Layout() {
 
                     @Override
@@ -36,7 +36,7 @@ public class showSingleWorldManager {
                             @Override
                             public ItemStack getItem() {
 
-                                return new ItemCreator(getWorldEnvironmentBlock.getWorldEnvironmentBlock(world)).setName(ChatColor.GREEN + "World Info").addLore(ChatColor.GRAY + "Name: " + ChatColor.YELLOW + properWorldName.properWorldName(world), ChatColor.GRAY + "Difficulty: " + ChatColor.YELLOW + world.getDifficulty(), ChatColor.GRAY + "Environment Type: " + ChatColor.YELLOW + world.getEnvironment()).create();
+                                return new ItemCreator(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(world)).setName(ChatColor.GREEN + "World Info").addLore(ChatColor.GRAY + "Name: " + ChatColor.YELLOW + ProperWorldName.properWorldName(world), ChatColor.GRAY + "Difficulty: " + ChatColor.YELLOW + world.getDifficulty(), ChatColor.GRAY + "Environment Type: " + ChatColor.YELLOW + world.getEnvironment()).create();
                             }
 
                             @Override
@@ -63,7 +63,7 @@ public class showSingleWorldManager {
                             @Override
                             public void onClick(Player player) {
                                 if (player.getWorld() != world) {
-                                    player.sendMessage(ChatColor.GRAY + "Teleporting to " + properWorldName.properWorldName(world) + "...");
+                                    player.sendMessage(ChatColor.GRAY + "Teleporting to " + ProperWorldName.properWorldName(world) + "...");
                                     player.teleport(world.getSpawnLocation());
                                 } else {
                                     player.sendMessage(ChatColor.RED + "You are already in this world!");
@@ -83,7 +83,7 @@ public class showSingleWorldManager {
                         return null;
                     }
                 },
-                worldDeleteButton.worldDeleteButton(world)
+                WorldDeleteButton.worldDeleteButton(world)
         ).show(player);
     }
 }

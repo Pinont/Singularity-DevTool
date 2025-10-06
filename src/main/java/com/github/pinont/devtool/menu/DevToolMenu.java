@@ -1,6 +1,10 @@
 package com.github.pinont.devtool.menu;
 
-import com.github.pinont.devtool.utils.blank;
+import com.github.pinont.devtool.menu.submenu.CustomItemMenu;
+import com.github.pinont.devtool.menu.submenu.OtherToolsMenu;
+import com.github.pinont.devtool.menu.submenu.ServerPlayerManagerMenu;
+import com.github.pinont.devtool.menu.submenu.ServerWorldMangerMenu;
+import com.github.pinont.devtool.methods.Blank;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.items.ItemHeadCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
@@ -25,9 +29,9 @@ public class DevToolMenu {
     public static void openDevTool(Player player) {
         String version = getAPIVersion();
         Menu devMenu = new Menu(ChatColor.DARK_RED + "Developer Tools " + ChatColor.GRAY + "(" + version + ")", 9*5);
-        devMenu.setLayout("=========", "====i====", "=========", "==w=p=t==", "=========");
+        devMenu.setLayout("=========", "====i====", "=========", "==w=p=t==", "====c====", "=========");
         devMenu.setKey(
-                blank.blank(),
+                Blank.getLayout(),
                 new Layout() {
 
                     @Override
@@ -55,7 +59,7 @@ public class DevToolMenu {
                     @Override
                     public char getKey() {
                         return 'p';
-                    }
+                    } // player list
 
                     @Override
                     public Button getButton() {
@@ -67,7 +71,7 @@ public class DevToolMenu {
 
                             @Override
                             public void onClick(Player player) {
-                                showServerPlayerManager.showServerPlayerManager(player);
+                                ServerPlayerManagerMenu.showServerPlayerManager(player);
                             }
                         };
                     }
@@ -88,7 +92,7 @@ public class DevToolMenu {
 
                             @Override
                             public void onClick(Player player) {
-                                showServerWorldManger.showServerWorldManger(player);
+                                ServerWorldMangerMenu.showServerWorldManger(player);
                             }
                         };
                     }
@@ -109,7 +113,28 @@ public class DevToolMenu {
 
                             @Override
                             public void onClick(Player player) {
-                                showOtherTools.showOtherTools(player);
+                                OtherToolsMenu.showOtherTools(player);
+                            }
+                        };
+                    }
+                },
+                new Layout() {
+                    @Override
+                    public char getKey() {
+                        return 'c'; // customItem
+                    }
+
+                    @Override
+                    public Button getButton() {
+                        return new Button() {
+                            @Override
+                            public ItemStack getItem() {
+                                return new ItemCreator(Material.CHEST).setName("Custom Items").addLore("Open Custom Item Creator").create();
+                            }
+
+                            @Override
+                            public void onClick(Player player) {
+                                CustomItemMenu.showCustomItemList(player);
                             }
                         };
                     }

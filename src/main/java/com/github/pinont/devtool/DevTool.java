@@ -6,7 +6,6 @@ public final class DevTool extends CorePlugin {
 
     @Override
     public void onPluginStart() {
-
     }
 
     @Override

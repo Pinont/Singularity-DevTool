@@ -1,6 +1,6 @@
-package com.github.pinont.devtool.menu;
+package com.github.pinont.devtool.menu.submenu;
 
-import com.github.pinont.devtool.utils.getWorldCreatorMenu;
+import com.github.pinont.devtool.methods.GetWorldCreatorMenu;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.WorldType;
@@ -11,10 +11,10 @@ import java.util.Random;
 /**
  * Shows the world creator interface.
  */
-public class showWorldCreator {
+public class WorldCreatorMenu {
 
     public static void showWorldCreator(Player player) {
-        getWorldCreatorMenu.getWorldCreatorMenu(null, World.Environment.NORMAL, WorldType.NORMAL, true, 1000, Difficulty.EASY, new Random().nextLong(System.currentTimeMillis())).show(player);
+        GetWorldCreatorMenu.getWorldCreatorMenu(null, World.Environment.NORMAL, WorldType.NORMAL, true, 1000, Difficulty.EASY, new Random().nextLong(System.currentTimeMillis())).show(player);
     }
 
     /**
@@ -30,6 +30,6 @@ public class showWorldCreator {
      * @param seed the world seed
      */
     public static void showWorldCreator(Player player, String world_name, World.Environment environment, WorldType worldType, boolean generate_structure, int borderSize, Difficulty difficulty, long seed) {
-        getWorldCreatorMenu.getWorldCreatorMenu(world_name, environment, worldType, generate_structure, borderSize, difficulty, seed).show(player);
+        GetWorldCreatorMenu.getWorldCreatorMenu(world_name, environment, worldType, generate_structure, borderSize, difficulty, seed).show(player);
     }
 }

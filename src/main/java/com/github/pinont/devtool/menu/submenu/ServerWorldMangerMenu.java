@@ -1,7 +1,7 @@
-package com.github.pinont.devtool.menu;
+package com.github.pinont.devtool.menu.submenu;
 
-import com.github.pinont.devtool.utils.getWorldEnvironmentBlock;
-import com.github.pinont.devtool.utils.properWorldName;
+import com.github.pinont.devtool.methods.GetWorldEnvironmentBlock;
+import com.github.pinont.devtool.methods.ProperWorldName;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Menu;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Shows the server world manager interface.
  */
-public class showServerWorldManger {
+public class ServerWorldMangerMenu {
 
     public static void showServerWorldManger(Player p) {
         Menu worldManagerMenu = new Menu("World Manager", 9);
@@ -27,12 +27,12 @@ public class showServerWorldManger {
 
                 @Override
                 public ItemStack getItem() {
-                    return new ItemCreator(getWorldEnvironmentBlock.getWorldEnvironmentBlock(world)).setName(properWorldName.properWorldName(world)).addLore(ChatColor.BOLD + "" + ChatColor.YELLOW + "Click to edit").create();
+                    return new ItemCreator(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(world)).setName(ProperWorldName.properWorldName(world)).addLore(ChatColor.BOLD + "" + ChatColor.YELLOW + "Click to edit").create();
                 }
 
                 @Override
                 public void onClick(Player player) {
-                    showSingleWorldManager.showSingleWorldManager(world, player);
+                    SingleWorldManagerMenu.showSingleWorldManager(world, player);
                 }
             });
             count++;
@@ -51,7 +51,7 @@ public class showServerWorldManger {
 
             @Override
             public void onClick(Player player) {
-                showWorldCreator.showWorldCreator(player);
+                WorldCreatorMenu.showWorldCreator(player);
             }
         });
         worldManagerMenu.show(p);
