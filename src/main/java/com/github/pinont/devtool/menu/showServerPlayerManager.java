@@ -1,4 +1,4 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.menu;
 
 import com.github.pinont.singularitylib.api.items.ItemHeadCreator;
 import com.github.pinont.singularitylib.api.ui.Button;

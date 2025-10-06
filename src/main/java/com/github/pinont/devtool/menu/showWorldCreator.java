@@ -1,5 +1,6 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.menu;
 
+import com.github.pinont.devtool.utils.getWorldCreatorMenu;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.WorldType;

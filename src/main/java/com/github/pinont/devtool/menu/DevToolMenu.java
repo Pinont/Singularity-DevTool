@@ -1,5 +1,6 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.menu;
 
+import com.github.pinont.devtool.utils.blank;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.items.ItemHeadCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
@@ -14,7 +15,7 @@ import static com.github.pinont.singularitylib.plugin.CorePlugin.getAPIVersion;
 /**
  * Opens the developer tool interface for the specified player.
  */
-public class openDevTool {
+public class DevToolMenu {
 
     /**
      * Opens the developer tool interface for the specified player.

@@ -1,5 +1,6 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.menu;
 
+import com.github.pinont.devtool.utils.blank;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
 import com.github.pinont.singularitylib.api.ui.Menu;

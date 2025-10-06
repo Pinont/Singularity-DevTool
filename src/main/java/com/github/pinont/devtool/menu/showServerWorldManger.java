@@ -1,5 +1,7 @@
-package com.github.pinont.devtool.utils;
+package com.github.pinont.devtool.menu;
 
+import com.github.pinont.devtool.utils.getWorldEnvironmentBlock;
+import com.github.pinont.devtool.utils.properWorldName;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Menu;
