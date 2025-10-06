@@ -1,5 +1,6 @@
 package com.github.pinont.devtool.commands;
 
+import com.github.pinont.devtool.items.Tool;
 import com.github.pinont.devtool.menu.DevToolMenu;
 import com.github.pinont.singularitylib.api.annotation.AutoRegister;
 import com.github.pinont.singularitylib.api.command.SimpleCommand;
@@ -26,7 +27,7 @@ public class DevTool implements SimpleCommand {
                     break;
                 }
                 case 1: {
-                    ItemStack devToolItem = this.getItem();
+                    ItemStack devToolItem = new Tool().getItem();
                     if (strings[0].equalsIgnoreCase("get") || strings[0].equalsIgnoreCase("getItem")) {
                         player.getInventory().addItem(devToolItem);
                     }
