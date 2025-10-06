@@ -1,4 +1,4 @@
-package com.example;
+package com.github.pinont.devtool;
 
 import com.github.pinont.singularitylib.plugin.CorePlugin;
 
@@ -11,6 +11,5 @@ public final class SingularityPlugin extends CorePlugin {
 
     @Override
     public void onPluginStop() {
-
     }
 }
