@@ -6,16 +6,24 @@ on:
   pull_request:
 
 jobs:
-  validate:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v4
-      - name: Setup JDK 25
+      - name: Setup JDK 25 (+ maven settings for GitHub Packages)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '25'
-      # Full `mvn package` requires SingularityLib 2.0.0-SNAPSHOT from GitHub Packages
-      # (needs a PAT secret). Until the v2 line publishes, validate pom + resources only.
-      - name: Validate
-        run: mvn -q validate
+          server-id: github-pinont   # must match the <id> of the GH Packages repo in pom.xml
+          settings-path: ${{ github.workspace }}
+      # EXPERIMENT: resolves SingularityLib 2.0.0-SNAPSHOT from GitHub Packages using
+      # this repo's own GITHUB_TOKEN — tests whether cross-repo same-user reads are
+      # allowed by default without a manual package-access grant.
+      - name: Build (full compile against lib snapshot)
+        run: mvn -B clean package
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
