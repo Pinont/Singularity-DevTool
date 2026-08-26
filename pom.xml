@@ -12,8 +12,11 @@
     <name>SingularityPlugin</name>
 
     <properties>
-        <singularity.version>1.0.0</singularity.version>
-        <java.version>23</java.version>
+        <!-- v2 line: tracks SingularityLib rework/v2 branch. NOT published yet,
+             so resolution fails until the lib publishes 2.0.0-SNAPSHOT to
+             GitHub Packages. Accepted for this pass. -->
+        <singularity.version>2.0.0-SNAPSHOT</singularity.version>
+        <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -33,6 +36,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.5.3</version>
+                <configuration>
+                    <!-- Bootstrap model: SingularityLib ships as its own server
+                         plugin and must NEVER be bundled into this jar. -->
+                    <artifactSet>
+                        <excludes>
+                            <exclude>com.github.pinont:SingularityLib</exclude>
+                        </excludes>
+                    </artifactSet>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -56,10 +68,29 @@
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
+        <!-- GitHub Packages: primary home for SingularityLib artifacts.
+             Concrete repo path required (GitHub Packages has no wildcard
+             group URLs); matches SingularityLib distributionManagement. -->
+        <repository>
+            <id>github-pinont</id>
+            <url>https://maven.pkg.github.com/pinont/SingularityLib</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <!-- JitPack TEMPORARILY DISABLED: lib v2 publishes to GitHub Packages
+             only (locked decision). Re-enable only if pulling legacy <=1.3.x
+             lib artifacts. NOTE: resolution of singularity.version=2.0.0-SNAPSHOT
+             FAILS until the lib publishes to GitHub Packages — expected. Auth
+             (user + PAT with read:packages) goes in settings.xml when needed.
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        -->
     </repositories>
 
     <dependencies>
@@ -73,6 +104,9 @@
             <groupId>com.github.pinont</groupId>
             <artifactId>SingularityLib</artifactId>
             <version>${singularity.version}</version>
+            <!-- Bootstrap model: lib is a standalone server plugin joined via
+                 classpath; never bundled (see shade excludes above). -->
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
