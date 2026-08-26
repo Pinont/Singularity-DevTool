@@ -1,0 +1,21 @@
+name: build
+
+on:
+  push:
+    branches: [ main, "rework/**" ]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      # Full `mvn package` requires SingularityLib 2.0.0-SNAPSHOT from GitHub Packages
+      # (needs a PAT secret). Until the v2 line publishes, validate pom + resources only.
+      - name: Validate
+        run: mvn -q validate
