@@ -18,42 +18,24 @@ import static com.github.pinont.singularitylib.plugin.CorePlugin.getInstance;
 public class GetWorldCreatorMenu {
 
     public static Menu getWorldCreatorMenu(String name, World.Environment environment, WorldType worldType, boolean generate_structure, int borderSize, Difficulty difficulty, Long seed) {
-        Menu worldCreatorMenu = new Menu("World Creator").setLayout("----w----", "-=n=e=t=-", "-=g=b=s=-", "----c----");
+        Menu worldCreatorMenu = new Menu(getInstance(), "World Creator").setLayout("----w----", "-=n=e=t=-", "-=g=b=s=-", "----c----");
         return worldCreatorMenu.setKey(
                 Blank.getLayout(),
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return '-';
-                    } // border
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                new Layout('-', new Button() { // border
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(Material.YELLOW_STAINED_GLASS_PANE).setName(" ").create();
+                                return new ItemCreator(getInstance(), Material.YELLOW_STAINED_GLASS_PANE).setName(" ").create();
                             }
 
                             @Override
                             public void onClick(Player player) {
 
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 'w';
-                    } // world creator icon
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('w', new Button() { // world creator icon
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(new ItemStack(Material.GOLD_BLOCK)).setName(ChatColor.BOLD + "" + ChatColor.YELLOW + "World Creator").addLore(
+                                return new ItemCreator(getInstance(), new ItemStack(Material.GOLD_BLOCK)).setName(ChatColor.BOLD + "" + ChatColor.YELLOW + "World Creator").addLore(
                                         ChatColor.GRAY + "Name: " + ChatColor.YELLOW + (name == null ? ChatColor.RED + "Not Set" : name),
                                         ChatColor.GRAY + "Environment Type: " + ChatColor.YELLOW + (environment == null ? ChatColor.RED + "Not Set" : environment),
                                         ChatColor.GRAY + "World Type: " + ChatColor.YELLOW + (worldType == null ? ChatColor.RED + "Not Set" : worldType),
@@ -71,24 +53,14 @@ public class GetWorldCreatorMenu {
                                 CreateWorld.createWorld(name, environment, worldType, generate_structure, borderSize, difficulty, seed);
                                 player.sendMessage(ChatColor.GREEN + "World '" + name + "' has been created!");
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 'n';
-                    } // set world name
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('n', new Button() { // set world name
                             @Override
                             public ItemStack getItem() {
                                 if (name == null) {
-                                    return new ItemCreator(Material.OAK_SIGN).setName("Set World Name").addLore(ChatColor.YELLOW + "Click to set world name.").create();
+                                    return new ItemCreator(getInstance(), Material.OAK_SIGN).setName("Set World Name").addLore(ChatColor.YELLOW + "Click to set world name.").create();
                                 }
-                                return new ItemCreator(Material.BIRCH_SIGN).setName(name).addLore(ChatColor.YELLOW + "Click to change world name.").create();
+                                return new ItemCreator(getInstance(), Material.BIRCH_SIGN).setName(name).addLore(ChatColor.YELLOW + "Click to change world name.").create();
                             }
 
                             @Override
@@ -137,24 +109,14 @@ public class GetWorldCreatorMenu {
                                 }));
                                 player.closeInventory();
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 'e'; // environment
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('e', new Button() { // environment
                             @Override
                             public ItemStack getItem() {
                                 if (environment == null) {
-                                    return new ItemCreator(Material.COMMAND_BLOCK).setName("Set World Environment").addLore(ChatColor.YELLOW + "Click to change world environment.").create();
+                                    return new ItemCreator(getInstance(), Material.COMMAND_BLOCK).setName("Set World Environment").addLore(ChatColor.YELLOW + "Click to change world environment.").create();
                                 }
-                                return new ItemCreator(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(environment)).setName(environment.name()).addLore(ChatColor.YELLOW + "Click to change world environment.").create();
+                                return new ItemCreator(getInstance(), GetWorldEnvironmentBlock.getWorldEnvironmentBlock(environment)).setName(environment.name()).addLore(ChatColor.YELLOW + "Click to change world environment.").create();
                             }
 
                             @Override
@@ -164,24 +126,14 @@ public class GetWorldCreatorMenu {
                                 int nextIndex = (currentIndex + 1) % environments.length;
                                 WorldCreatorMenu.showWorldCreator(player, name, environments[nextIndex], worldType, generate_structure, borderSize, difficulty, seed);
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 't'; // world type
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('t', new Button() { // world type
                             @Override
                             public ItemStack getItem() {
                                 if (worldType == null) {
-                                    return new ItemCreator(Material.OAK_SAPLING).setName("Set World Type").addLore(ChatColor.YELLOW + "Click to change world type.").create();
+                                    return new ItemCreator(getInstance(), Material.OAK_SAPLING).setName("Set World Type").addLore(ChatColor.YELLOW + "Click to change world type.").create();
                                 }
-                                return new ItemCreator(Material.CHERRY_SAPLING).setName(worldType.getName()).addLore(ChatColor.YELLOW + "Click to change world type").create();
+                                return new ItemCreator(getInstance(), Material.CHERRY_SAPLING).setName(worldType.getName()).addLore(ChatColor.YELLOW + "Click to change world type").create();
                             }
 
                             @Override
@@ -192,43 +144,23 @@ public class GetWorldCreatorMenu {
 
                                 WorldCreatorMenu.showWorldCreator(player, name, environment, worldTypes[nextTypeIndex], generate_structure, borderSize, difficulty, seed);
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 'g'; // generate structure? def = true
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('g', new Button() { // generate structure? def = true
                             @Override
                             public ItemStack getItem() {
-                                if (generate_structure) return new ItemCreator(Material.BIRCH_STAIRS).setName(ChatColor.GRAY + "Generate Structure: " + ChatColor.GREEN + "True").create();
-                                return new ItemCreator(Material.ACACIA_STAIRS).setName(ChatColor.GRAY + "Generate Structure: " + ChatColor.GREEN + "False").create();
+                                if (generate_structure) return new ItemCreator(getInstance(), Material.BIRCH_STAIRS).setName(ChatColor.GRAY + "Generate Structure: " + ChatColor.GREEN + "True").create();
+                                return new ItemCreator(getInstance(), Material.ACACIA_STAIRS).setName(ChatColor.GRAY + "Generate Structure: " + ChatColor.GREEN + "False").create();
                             }
 
                             @Override
                             public void onClick(Player player) {
                                 WorldCreatorMenu.showWorldCreator(player, name, environment, worldType, !generate_structure, borderSize, difficulty, seed);
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 'b'; // border size? def = default
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('b', new Button() { // border size? def = default
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(Material.STRUCTURE_VOID).setName(ChatColor.GRAY + "World Border Size: " + ChatColor.YELLOW + borderSize).create();
+                                return new ItemCreator(getInstance(), Material.STRUCTURE_VOID).setName(ChatColor.GRAY + "World Border Size: " + ChatColor.YELLOW + borderSize).create();
                             }
 
                             @Override
@@ -277,21 +209,11 @@ public class GetWorldCreatorMenu {
                                 }));
                                 player.closeInventory();
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 's'; // seed? def = default
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('s', new Button() { // seed? def = default
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(Material.WHEAT_SEEDS).setName(ChatColor.GRAY + "Seed: " + ChatColor.YELLOW + seed).create();
+                                return new ItemCreator(getInstance(), Material.WHEAT_SEEDS).setName(ChatColor.GRAY + "Seed: " + ChatColor.YELLOW + seed).create();
                             }
 
                             @Override
@@ -340,21 +262,11 @@ public class GetWorldCreatorMenu {
                                 }));
                                 player.closeInventory();
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 'c'; // create button
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('c', new Button() { // create button
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(Material.DIAMOND).setName(ChatColor.WHITE + "Create World").addLore(ChatColor.YELLOW + "Click to create world.").create();
+                                return new ItemCreator(getInstance(), Material.DIAMOND).setName(ChatColor.WHITE + "Create World").addLore(ChatColor.YELLOW + "Click to create world.").create();
                             }
 
                             @Override
@@ -364,9 +276,7 @@ public class GetWorldCreatorMenu {
                                 CreateWorld.createWorld(name, environment, worldType, generate_structure, borderSize, difficulty, seed);
                                 player.sendMessage(ChatColor.GREEN + "World '" + name + "' has been created!");
                             }
-                        };
-                    }
-                }
+                        })
         );
     }
 }

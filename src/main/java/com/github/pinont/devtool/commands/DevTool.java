@@ -90,8 +90,4 @@ public class DevTool implements SimpleCommand {
         return "devTool";
     }
 
-    @Override
-    public String description() {
-        return "SingularityLib Developer Tools";
-    }
 }

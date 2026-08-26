@@ -3,10 +3,10 @@ package com.github.pinont.devtool.menu.submenu;
 import com.github.pinont.devtool.methods.Blank;
 import com.github.pinont.devtool.methods.GetWorldEnvironmentBlock;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
-import com.github.pinont.singularitylib.api.manager.WorldManager;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
 import com.github.pinont.singularitylib.api.ui.Menu;
+import com.github.pinont.singularitylib.plugin.CorePlugin;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,74 +17,46 @@ import org.bukkit.inventory.ItemStack;
 public class DeleteWorldApprovalMenu {
 
     public static void showDeleteWorldApproval(Player player, World targetWorld) {
-        new Menu(ChatColor.RED + "Are you sure to delete " + targetWorld.getName() + "?")
+        new Menu(CorePlugin.getInstance(), ChatColor.RED + "Are you sure to delete " + targetWorld.getName() + "?")
                 .setLayout("=========", "====w====", "=========", "==a===d==", "=========")
                 .setKey(Blank.getLayout(),
-                        new Layout() {
+                        new Layout('w', new Button() {
                             @Override
-                            public char getKey() {
-                                return 'w';
+                            public ItemStack getItem() {
+                                return new ItemCreator(CorePlugin.getInstance(), new ItemStack(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(targetWorld))).setName(ChatColor.RED + "Are you sure to delete " + targetWorld.getName() + "?").create();
                             }
 
                             @Override
-                            public Button getButton() {
-                                return new Button() {
-                                    @Override
-                                    public ItemStack getItem() {
-                                        return new ItemCreator(new ItemStack(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(targetWorld))).setName(ChatColor.RED + "Are you sure to delete " + targetWorld.getName() + "?").create();
-                                    }
+                            public void onClick(Player player) {
 
-                                    @Override
-                                    public void onClick(Player player) {
-
-                                    }
-                                };
                             }
-                        },
-                        new Layout() {
+                        }),
+                        new Layout('a', new Button() {
                             @Override
-                            public char getKey() {
-                                return 'a';
+                            public ItemStack getItem() {
+                                return new ItemCreator(CorePlugin.getInstance(), Material.GREEN_STAINED_GLASS).setName(ChatColor.GREEN + "ACCEPT").create();
                             }
 
                             @Override
-                            public Button getButton() {
-                                return new Button() {
-                                    @Override
-                                    public ItemStack getItem() {
-                                        return new ItemCreator(Material.GREEN_STAINED_GLASS).setName(ChatColor.GREEN + "ACCEPT").create();
-                                    }
-
-                                    @Override
-                                    public void onClick(Player player) {
-                                        WorldManager.delete(targetWorld.getName());
-                                        player.sendMessage(ChatColor.RED + targetWorld.getName() + " is now mark for removal!");
-                                        ServerWorldMangerMenu.showServerWorldManger(player);
-                                    }
-                                };
+                            public void onClick(Player player) {
+                                targetWorld.removeMetadata("loader", CorePlugin.getInstance());
+                                targetWorld.getWorldFolder().deleteOnExit();
+                                Bukkit.unloadWorld(targetWorld, false);
+                                player.sendMessage(ChatColor.RED + targetWorld.getName() + " is now mark for removal!");
+                                ServerWorldMangerMenu.showServerWorldManger(player);
                             }
-                        },
-                        new Layout() {
+                        }),
+                        new Layout('d', new Button() {
                             @Override
-                            public char getKey() {
-                                return 'd';
+                            public ItemStack getItem() {
+                                return new ItemCreator(CorePlugin.getInstance(), Material.RED_STAINED_GLASS).setName(ChatColor.RED + "DENY").create();
                             }
 
                             @Override
-                            public Button getButton() {
-                                return new Button() {
-                                    @Override
-                                    public ItemStack getItem() {
-                                        return new ItemCreator(Material.RED_STAINED_GLASS).setName(ChatColor.RED + "DENY").create();
-                                    }
-
-                                    @Override
-                                    public void onClick(Player player) {
-                                        SingleWorldManagerMenu.showSingleWorldManager(targetWorld, player);
-                                    }
-                                };
+                            public void onClick(Player player) {
+                                SingleWorldManagerMenu.showSingleWorldManager(targetWorld, player);
                             }
-                        }
+                        })
                 ).show(player);
     }
 }

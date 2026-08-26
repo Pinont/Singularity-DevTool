@@ -5,6 +5,7 @@ import com.github.pinont.devtool.methods.ProperWorldName;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Menu;
+import com.github.pinont.singularitylib.plugin.CorePlugin;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public class ServerWorldMangerMenu {
 
     public static void showServerWorldManger(Player p) {
-        Menu worldManagerMenu = new Menu("World Manager", 9);
+        Menu worldManagerMenu = new Menu(CorePlugin.getInstance(), "World Manager", 9);
         int count = 0;
         for (World world : Bukkit.getWorlds()) {
             int finalCount = count;
@@ -27,7 +28,7 @@ public class ServerWorldMangerMenu {
 
                 @Override
                 public ItemStack getItem() {
-                    return new ItemCreator(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(world)).setName(ProperWorldName.properWorldName(world)).addLore(ChatColor.BOLD + "" + ChatColor.YELLOW + "Click to edit").create();
+                    return new ItemCreator(CorePlugin.getInstance(), GetWorldEnvironmentBlock.getWorldEnvironmentBlock(world)).setName(ProperWorldName.properWorldName(world)).addLore(ChatColor.BOLD + "" + ChatColor.YELLOW + "Click to edit").create();
                 }
 
                 @Override
@@ -46,7 +47,7 @@ public class ServerWorldMangerMenu {
 
             @Override
             public ItemStack getItem() {
-                return new ItemCreator(new ItemStack(Material.BEDROCK)).setName(ChatColor.YELLOW + "Click to create new world").create();
+                return new ItemCreator(CorePlugin.getInstance(), new ItemStack(Material.BEDROCK)).setName(ChatColor.YELLOW + "Click to create new world").create();
             }
 
             @Override

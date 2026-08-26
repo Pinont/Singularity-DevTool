@@ -12,26 +12,16 @@ import org.bukkit.inventory.ItemStack;
 public class Blank {
 
     public static Layout getLayout() {
-        return new Layout() {
+        return new Layout('=', new Button() {
             @Override
-            public char getKey() {
-                return '=';
+            public ItemStack getItem() {
+                return new ItemStack(Material.AIR);
             }
 
             @Override
-            public Button getButton() {
-                return new Button() {
-                    @Override
-                    public ItemStack getItem() {
-                        return new ItemStack(Material.AIR);
-                    }
+            public void onClick(Player player) {
 
-                    @Override
-                    public void onClick(Player player) {
-
-                    }
-                };
             }
-        };
+        });
     }
 }

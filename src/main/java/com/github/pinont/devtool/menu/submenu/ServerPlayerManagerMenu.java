@@ -3,6 +3,7 @@ package com.github.pinont.devtool.menu.submenu;
 import com.github.pinont.singularitylib.api.items.ItemHeadCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Menu;
+import com.github.pinont.singularitylib.plugin.CorePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 public class ServerPlayerManagerMenu {
 
     public static void showServerPlayerManager(Player origin) {
-        Menu playerManager = new Menu("Player Manager", 9); // temp
+        Menu playerManager = new Menu(CorePlugin.getInstance(), "Player Manager", 9); // temp
         for (int i = 0; i < Bukkit.getOnlinePlayers().size(); i++) {
             Player player = (Player) Bukkit.getOnlinePlayers().toArray()[i];
             int finalI = i;
@@ -26,7 +27,7 @@ public class ServerPlayerManagerMenu {
 
                 @Override
                 public ItemStack getItem() {
-                    return new ItemHeadCreator(new ItemStack(Material.PLAYER_HEAD)).setOwner(player.getName()).setName(player.getName()).create();
+                    return new ItemHeadCreator(CorePlugin.getInstance(), new ItemStack(Material.PLAYER_HEAD)).setOwner(player.getName()).setName(player.getName()).create();
                 }
 
                 @Override

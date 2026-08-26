@@ -8,6 +8,7 @@ import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
 import com.github.pinont.singularitylib.api.ui.Menu;
+import com.github.pinont.singularitylib.plugin.CorePlugin;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,46 +19,27 @@ import org.bukkit.inventory.ItemStack;
 public class SingleWorldManagerMenu {
 
     public static void showSingleWorldManager(World world, Player player) {
-        Menu worldManagerMenu = new Menu(world.getName() + ": World Manager");
+        Menu worldManagerMenu = new Menu(CorePlugin.getInstance(), world.getName() + ": World Manager");
         worldManagerMenu.setLayout("=========", "====w====", "=========", "==t=d=r==", "=========");
         worldManagerMenu.setKey(
                 Blank.getLayout(),
-                new Layout() {
-
-                    @Override
-                    public char getKey() {
-                        return 'w';
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() { // world info
+                new Layout('w', new Button() { // world info
 
                             @Override
                             public ItemStack getItem() {
 
-                                return new ItemCreator(GetWorldEnvironmentBlock.getWorldEnvironmentBlock(world)).setName(ChatColor.GREEN + "World Info").addLore(ChatColor.GRAY + "Name: " + ChatColor.YELLOW + ProperWorldName.properWorldName(world), ChatColor.GRAY + "Difficulty: " + ChatColor.YELLOW + world.getDifficulty(), ChatColor.GRAY + "Environment Type: " + ChatColor.YELLOW + world.getEnvironment()).create();
+                                return new ItemCreator(CorePlugin.getInstance(), GetWorldEnvironmentBlock.getWorldEnvironmentBlock(world)).setName(ChatColor.GREEN + "World Info").addLore(ChatColor.GRAY + "Name: " + ChatColor.YELLOW + ProperWorldName.properWorldName(world), ChatColor.GRAY + "Difficulty: " + ChatColor.YELLOW + world.getDifficulty(), ChatColor.GRAY + "Environment Type: " + ChatColor.YELLOW + world.getEnvironment()).create();
                             }
 
                             @Override
                             public void onClick(Player player) {
 
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 't'; // teleport
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return new Button() {
+                        }),
+                new Layout('t', new Button() { // teleport
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(new ItemStack(Material.BEACON)).setName("Teleport").addLore(ChatColor.BOLD + "" + ChatColor.YELLOW + "Click to Teleport").create();
+                                return new ItemCreator(CorePlugin.getInstance(), new ItemStack(Material.BEACON)).setName("Teleport").addLore(ChatColor.BOLD + "" + ChatColor.YELLOW + "Click to Teleport").create();
                             }
 
                             @Override
@@ -69,20 +51,8 @@ public class SingleWorldManagerMenu {
                                     player.sendMessage(ChatColor.RED + "You are already in this world!");
                                 }
                             }
-                        };
-                    }
-                },
-                new Layout() {
-                    @Override
-                    public char getKey() {
-                        return 'r'; // gamerules
-                    }
-
-                    @Override
-                    public Button getButton() {
-                        return null;
-                    }
-                },
+                        }),
+                new Layout('r', null), // gamerules
                 WorldDeleteButton.worldDeleteButton(world)
         ).show(player);
     }

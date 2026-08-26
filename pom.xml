@@ -71,15 +71,14 @@
         <!-- GitHub Packages: primary home for SingularityLib artifacts.
              Concrete repo path required (GitHub Packages has no wildcard
              group URLs); matches SingularityLib distributionManagement. -->
+        <!-- Public token-free registry (GitHub Pages via raw.githubusercontent).
+             See Pinont/singularity-maven. -->
         <repository>
-            <id>github-pinont</id>
-            <url>https://maven.pkg.github.com/pinont/SingularityLib</url>
+            <id>singularity</id>
+            <url>https://maven.pinont.me/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
         </repository>
         <!-- JitPack TEMPORARILY DISABLED: lib v2 publishes to GitHub Packages
              only (locked decision). Re-enable only if pulling legacy <=1.3.x
@@ -102,7 +101,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.pinont</groupId>
-            <artifactId>SingularityLib</artifactId>
+            <artifactId>singularitylib</artifactId>
             <version>${singularity.version}</version>
             <!-- Bootstrap model: lib is a standalone server plugin joined via
                  classpath; never bundled (see shade excludes above). -->

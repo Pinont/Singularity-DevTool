@@ -20,10 +20,6 @@ public class Vanish implements SimpleCommand {
         return "vanish:v";
     }
 
-    @Override
-    public String description() {
-        return "Vanish player";
-    }
 
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] strings) {

@@ -24,10 +24,6 @@ public class FlySpeed implements SimpleCommand {
         return "flyspeed:fs";
     }
 
-    @Override
-    public String description() {
-        return "Set Player Flying speed";
-    }
 
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] strings) {

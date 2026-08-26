@@ -4,6 +4,7 @@ import com.github.pinont.devtool.menu.submenu.DeleteWorldApprovalMenu;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
+import com.github.pinont.singularitylib.plugin.CorePlugin;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,48 +16,28 @@ public class WorldDeleteButton {
 
     public static Layout worldDeleteButton(World world) {
         if (world.hasMetadata("loader")) {
-            return new Layout() {
+            return new Layout('d', new Button() {
                 @Override
-                public char getKey() {
-                    return 'd';
+                public ItemStack getItem() {
+                    return new ItemCreator(CorePlugin.getInstance(), Material.RED_STAINED_GLASS).setName(ChatColor.RED +"Delete").addLore(ChatColor.RED + "Click here to delete this world").create();
                 }
 
                 @Override
-                public Button getButton() {
-                    return new Button() {
-                        @Override
-                        public ItemStack getItem() {
-                            return new ItemCreator(Material.RED_STAINED_GLASS).setName(ChatColor.RED +"Delete").addLore(ChatColor.RED + "Click here to delete this world").create();
-                        }
-
-                        @Override
-                        public void onClick(Player player) {
-                            DeleteWorldApprovalMenu.showDeleteWorldApproval(player, world);
-                        }
-                    };
+                public void onClick(Player player) {
+                    DeleteWorldApprovalMenu.showDeleteWorldApproval(player, world);
                 }
-            };
+            });
         }
-        return new Layout() {
+        return new Layout('d', new Button() {
             @Override
-            public char getKey() {
-                return 'd';
+            public ItemStack getItem() {
+                return new ItemCreator(CorePlugin.getInstance(), Material.AIR).create();
             }
 
             @Override
-            public Button getButton() {
-                return new Button() {
-                    @Override
-                    public ItemStack getItem() {
-                        return new ItemCreator(Material.AIR).create();
-                    }
+            public void onClick(Player player) {
 
-                    @Override
-                    public void onClick(Player player) {
-
-                    }
-                };
             }
-        };
+        });
     }
 }
