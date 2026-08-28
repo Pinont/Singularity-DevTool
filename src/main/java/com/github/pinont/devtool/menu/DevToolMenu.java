@@ -11,6 +11,8 @@ import com.github.pinont.singularitylib.api.ui.Button;
 import com.github.pinont.singularitylib.api.ui.Layout;
 import com.github.pinont.singularitylib.api.ui.Menu;
 import com.github.pinont.singularitylib.plugin.CorePlugin;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +39,15 @@ public class DevToolMenu {
 
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(CorePlugin.getInstance(), new ItemStack(Material.GRASS_BLOCK)).setName(ChatColor.GREEN + "Server Info").addLore(ChatColor.GRAY + "Server: " + ChatColor.YELLOW + Bukkit.getServer().getName(), ChatColor.GRAY + "Version: " + ChatColor.YELLOW + Bukkit.getServer().getVersion(), ChatColor.GRAY + "Plugins (" + ChatColor.YELLOW + Bukkit.getServer().getPluginManager().getPlugins().length + ChatColor.GRAY + ")").create();
+                                // Components (not legacy ChatColor strings): ItemCreator's string
+                                // setters run MiniMessage, which rejects legacy § codes.
+                                return new ItemCreator(CorePlugin.getInstance(), new ItemStack(Material.GRASS_BLOCK))
+                                        .setName(Component.text("Server Info", NamedTextColor.GREEN))
+                                        .addLore(
+                                                Component.text("Server: ", NamedTextColor.GRAY).append(Component.text(Bukkit.getServer().getName(), NamedTextColor.YELLOW)),
+                                                Component.text("Version: ", NamedTextColor.GRAY).append(Component.text(Bukkit.getServer().getVersion(), NamedTextColor.YELLOW)),
+                                                Component.text("Plugins (", NamedTextColor.GRAY).append(Component.text(Bukkit.getServer().getPluginManager().getPlugins().length, NamedTextColor.YELLOW)).append(Component.text(")", NamedTextColor.GRAY))
+                                        ).create();
                             }
 
                             @Override
@@ -48,7 +58,9 @@ public class DevToolMenu {
                 new Layout('p', new Button() { // player list
                             @Override
                             public ItemStack getItem() {
-                                return new ItemHeadCreator(CorePlugin.getInstance(), new ItemStack(Material.PLAYER_HEAD)).setOwner(player.getName()).setName("Player List").create();
+                                return new ItemHeadCreator(CorePlugin.getInstance(), new ItemStack(Material.PLAYER_HEAD))
+                                        .setOwner(player.getName())
+                                        .setName(Component.text("Player List")).create();
                             }
 
                             @Override
@@ -59,7 +71,7 @@ public class DevToolMenu {
                 new Layout('w', new Button() { // worldcreator
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(CorePlugin.getInstance(), new ItemStack(Material.COARSE_DIRT)).setName("Worlds").create();
+                                return new ItemCreator(CorePlugin.getInstance(), new ItemStack(Material.COARSE_DIRT)).setName(Component.text("Worlds")).create();
                             }
 
                             @Override
@@ -70,7 +82,9 @@ public class DevToolMenu {
                 new Layout('t', new Button() { // tools
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(CorePlugin.getInstance(), Material.STICK).setName("Tools").addLore("More Tools").create();
+                                return new ItemCreator(CorePlugin.getInstance(), Material.STICK)
+                                        .setName(Component.text("Tools"))
+                                        .addLore(Component.text("More Tools")).create();
                             }
 
                             @Override
@@ -81,7 +95,9 @@ public class DevToolMenu {
                 new Layout('c', new Button() { // customItem
                             @Override
                             public ItemStack getItem() {
-                                return new ItemCreator(CorePlugin.getInstance(), Material.CHEST).setName("Custom Items").addLore("Open Custom Item Creator").create();
+                                return new ItemCreator(CorePlugin.getInstance(), Material.CHEST)
+                                        .setName(Component.text("Custom Items"))
+                                        .addLore(Component.text("Open Custom Item Creator")).create();
                             }
 
                             @Override

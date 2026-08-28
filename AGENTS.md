@@ -55,7 +55,7 @@ Source migrated to the lib v2 signatures:
 2. ~~Stale dependency version~~ — fixed on `rework/v2`: `${singularity.version}=2.0.0-SNAPSHOT` tracking the lib v2 line.
 3. Chat-input flows (`ChatEvent` + `SendChat`) are fragile global state — replace with conversation API (Paper `ConversationFactory`) during rework.
 4. Menus rebuild state imperatively per open; no shared pagination abstraction yet (lib roadmap item).
-5. No tests at all.
+5. Test coverage: MockBukkit smoke + command-dispatch + registration tests exist under `src/test/java` (see `DevToolCommandTest`, `DevToolRegistrationTest`, `DevToolTest`). Deeper menu/click-simulation coverage is still thin by design (MockBukkit inventory clicks are flaky).
 
 ## Agent guidance
 - New features in Java, wired through SingularityLib APIs (`CorePlugin`, `SimpleCommand`, `Menu`) rather than raw Bukkit where possible.
