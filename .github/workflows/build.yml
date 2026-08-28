@@ -24,6 +24,6 @@ jobs:
       # this repo's own GITHUB_TOKEN — tests whether cross-repo same-user reads are
       # allowed by default without a manual package-access grant.
       - name: Build (full compile against lib snapshot)
-        run: mvn -B clean package
+        run: mvn -B -U clean package
         env:
           GITHUB_TOKEN: ${{ github.token }}
