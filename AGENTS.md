@@ -19,7 +19,7 @@ The owner's plan says to "rework DevTool from Kotlin back to Java." **Fact-check
 mvn clean package          # shaded jar into target/ (JDK 25 required)
 ```
 - Requires **JDK 25** (`java.version=25`), targets **Paper API `26.2.build.N-stable`**.
-- Depends on `com.github.pinont:SingularityLib:2.0.0-SNAPSHOT` via the `${singularity.version}` property — pinned to the lib's v2 line.
+- Depends on `io.github.pinont:singularitylib:2.0.0-SNAPSHOT` via the `${singularity.version}` property — pinned to the lib's v2 line.
 - Resolves SingularityLib from the **public registry** (`https://raw.githubusercontent.com/Pinont/singularity-maven/gh-pages/`) — no auth required; Paper from `repo.papermc.io`. Source compiles against lib `2.0.0-SNAPSHOT` from this registry as of the v2 API migration (see below).
 - **Bootstrap model:** SingularityLib is NOT bundled into this jar. Dependency scope is `provided`, and `maven-shade-plugin` `artifactSet` excludes `com.github.pinont:SingularityLib`. At runtime the lib ships as its own plugin on the server.
 
