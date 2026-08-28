@@ -25,6 +25,7 @@ public class DevToolCommand extends CommandGroup {
         registerSubcommand(new ItemStudioSub());
         registerSubcommand(new RecipeSub());
         registerSubcommand(new ConfigSub());
+        registerSubcommand(new InspectSub());
     }
 
     @Override
@@ -153,6 +154,36 @@ public class DevToolCommand extends CommandGroup {
                 return;
             }
             com.github.pinont.devtool.menu.submenu.ConfigEditorMenu.open(player, plugin);
+        }
+    }
+
+    /**
+     * /devtool inspect [--entity] — vanilla NBT of held item or target entity.
+     */
+    static class InspectSub extends SubCommand {
+
+        @Override
+        public String getName() {
+            return "inspect";
+        }
+
+        @Override
+        public String getDescription() {
+            return "Inspect vanilla NBT (held item or --entity target)";
+        }
+
+        @Override
+        public void execute(org.bukkit.command.CommandSender sender, String[] args) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(Component.text("Players only.", NamedTextColor.RED));
+                return;
+            }
+            boolean entity = args.length > 0 && args[0].equalsIgnoreCase("--entity");
+            if (entity) {
+                com.github.pinont.devtool.tools.NbtInspector.inspectEntity(player);
+            } else {
+                com.github.pinont.devtool.tools.NbtInspector.inspectItem(player);
+            }
         }
     }
 
