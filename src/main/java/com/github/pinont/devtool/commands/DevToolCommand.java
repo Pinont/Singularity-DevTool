@@ -24,6 +24,7 @@ public class DevToolCommand extends CommandGroup {
         registerSubcommand(new HelpSub());
         registerSubcommand(new ItemStudioSub());
         registerSubcommand(new RecipeSub());
+        registerSubcommand(new ConfigSub());
     }
 
     @Override
@@ -118,6 +119,40 @@ public class DevToolCommand extends CommandGroup {
                     0.5f
             );
             sender.sendMessage(Component.text("Registered recipe 'devtool_iron' (iron→diamond, furnace).", NamedTextColor.GREEN));
+        }
+    }
+
+    /**
+     * /devtool config [plugin] — live config editor for a discovered plugin.
+     */
+    static class ConfigSub extends SubCommand {
+
+        @Override
+        public String getName() {
+            return "config";
+        }
+
+        @Override
+        public String getDescription() {
+            return "Live-edit a plugin's config.yml";
+        }
+
+        @Override
+        public void execute(org.bukkit.command.CommandSender sender, String[] args) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(Component.text("Players only.", NamedTextColor.RED));
+                return;
+            }
+            if (args.length < 1) {
+                player.sendMessage(Component.text("Usage: /devtool config <plugin>", NamedTextColor.YELLOW));
+                return;
+            }
+            var plugin = PluginRegistry.get(args[0]);
+            if (plugin == null) {
+                player.sendMessage(Component.text("Unknown Singularity plugin: " + args[0], NamedTextColor.RED));
+                return;
+            }
+            com.github.pinont.devtool.menu.submenu.ConfigEditorMenu.open(player, plugin);
         }
     }
 
