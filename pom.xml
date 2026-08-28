@@ -41,7 +41,7 @@
                          plugin and must NEVER be bundled into this jar. -->
                     <artifactSet>
                         <excludes>
-                            <exclude>com.github.pinont:SingularityLib</exclude>
+                            <exclude>io.github.pinont:singularitylib</exclude>
                         </excludes>
                     </artifactSet>
                 </configuration>
@@ -100,7 +100,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.pinont</groupId>
+            <groupId>io.github.pinont</groupId>
             <artifactId>singularitylib</artifactId>
             <version>${singularity.version}</version>
             <!-- Bootstrap model: lib is a standalone server plugin joined via
