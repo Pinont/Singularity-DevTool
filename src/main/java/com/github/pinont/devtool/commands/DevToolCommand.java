@@ -22,6 +22,8 @@ public class DevToolCommand extends CommandGroup {
 
     public DevToolCommand() {
         registerSubcommand(new HelpSub());
+        registerSubcommand(new ItemStudioSub());
+        registerSubcommand(new RecipeSub());
     }
 
     @Override
@@ -63,6 +65,59 @@ public class DevToolCommand extends CommandGroup {
             PluginPanelMenu.open(player, plugin);
         } else {
             sender.sendMessage(Component.text(plugin.getName() + " v" + plugin.getPluginMeta().getVersion(), NamedTextColor.YELLOW));
+        }
+    }
+
+    /**
+     * /devtool itemstudio — open the Item Studio material picker.
+     */
+    static class ItemStudioSub extends SubCommand {
+
+        @Override
+        public String getName() {
+            return "itemstudio";
+        }
+
+        @Override
+        public String getDescription() {
+            return "Open the Item Studio (try-create tool)";
+        }
+
+        @Override
+        public void execute(CommandSender sender, String[] args) {
+            if (sender instanceof Player player) {
+                com.github.pinont.devtool.menu.submenu.ItemStudioMenu.open(player);
+            } else {
+                sender.sendMessage(Component.text("Players only.", NamedTextColor.RED));
+            }
+        }
+    }
+
+    /**
+     * /devtool recipe <key> — register a demo furnace recipe via RecipeRegistry.
+     */
+    static class RecipeSub extends SubCommand {
+
+        @Override
+        public String getName() {
+            return "recipe";
+        }
+
+        @Override
+        public String getDescription() {
+            return "Register a demo recipe (RecipeRegistry)";
+        }
+
+        @Override
+        public void execute(CommandSender sender, String[] args) {
+            com.github.pinont.singularitylib.api.recipes.RecipeRegistry.registerFurnace(
+                    com.github.pinont.singularitylib.plugin.CorePlugin.getInstance(),
+                    "devtool_iron",
+                    new org.bukkit.inventory.ItemStack(org.bukkit.Material.IRON_INGOT),
+                    new org.bukkit.inventory.ItemStack(org.bukkit.Material.DIAMOND),
+                    0.5f
+            );
+            sender.sendMessage(Component.text("Registered recipe 'devtool_iron' (iron→diamond, furnace).", NamedTextColor.GREEN));
         }
     }
 
