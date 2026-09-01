@@ -31,11 +31,21 @@ public final class ItemStudioMenu {
     public static void open(Player player) {
         List<Material> materials = new ArrayList<>();
         for (Material m : Material.values()) {
-            if (m.isItem() && !m.isAir()) {
+            if (isStudioMaterial(m)) {
                 materials.add(m);
             }
         }
         new StudioMenu(materials).show(player);
+    }
+
+    static boolean isStudioMaterial(Material m) {
+        try {
+            return m.isItem() && !m.isAir();
+        } catch (Throwable ignored) {
+            // MockBukkit 26.2 throws UnimplementedOperationException for some
+            // Material.isItem() lookups (legacy fromLegacy path).
+            return false;
+        }
     }
 
     static ItemStack buildStudioItem(Material m) {
