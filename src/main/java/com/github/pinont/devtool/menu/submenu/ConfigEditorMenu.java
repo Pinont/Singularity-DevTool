@@ -1,5 +1,6 @@
 package com.github.pinont.devtool.menu.submenu;
 
+import com.github.pinont.devtool.methods.StartConversation;
 import com.github.pinont.singularitylib.api.items.ItemCreator;
 import com.github.pinont.singularitylib.api.manager.CommentConfigManager;
 import com.github.pinont.singularitylib.api.ui.Button;
@@ -72,11 +73,20 @@ public final class ConfigEditorMenu {
                 player.sendMessage(Component.text(key + " -> " + manager.get(key), NamedTextColor.GREEN));
                 show(player);
             } else if (value instanceof String s) {
-                // chat prompt (conversation-style): ask for a value
                 player.closeInventory();
-                player.sendMessage(Component.text("Type the new value for '" + key
-                        + "' (current: '" + s + "'), or 'cancel' to abort.", NamedTextColor.YELLOW));
-                ChatPrompt.setPending(target, player, key, manager, this);
+                StartConversation.ask(player,
+                        "Type the new value for '" + key + "' (current: '" + s
+                                + "'), or 'cancel' to abort.",
+                        input -> {
+                            manager.set(key, input);
+                            player.sendMessage(Component.text(key + " -> '" + input
+                                    + "' (use Save to persist).", NamedTextColor.GREEN));
+                            show(player);
+                        },
+                        () -> {
+                            player.sendMessage(Component.text("Edit cancelled.", NamedTextColor.GRAY));
+                            show(player);
+                        });
             } else {
                 player.sendMessage(Component.text("Cannot edit key '" + key + "' (" + value + ")", NamedTextColor.RED));
             }

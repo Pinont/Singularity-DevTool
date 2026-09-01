@@ -43,5 +43,6 @@ or dev snapshots from https://maven.pinont.me.
 ## Development roadmap (v2)
 DevTool v2 becomes an in-server IDE for Singularity plugins: auto-discovers all loaded
 Singularity plugins, bridges their commands under `/devtool <plugin> <cmd>`, GUI config
-editing with live reload, item/entity inspectors, and builders that export code snippets.
+editing with live reload, item/entity inspectors, builders that export code snippets,
+and Paper conversations for world-name / config-string prompts (no global chat listener).
 See the repo's AGENTS.md for the current state.

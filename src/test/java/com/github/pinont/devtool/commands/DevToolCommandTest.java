@@ -146,4 +146,58 @@ public class DevToolCommandTest {
                 player.getOpenInventory().getTopInventory().getSize(),
                 "player should be viewing the 27-slot plugin panel");
     }
+
+    @Test
+    @DisplayName("/devtool itemstudio by a player opens the 54-slot studio without crashing")
+    public void itemStudioByPlayerOpensMenu() {
+        Player player = addPlayer("Pinont");
+
+        Assertions.assertDoesNotThrow(
+                () -> command.execute(player, new String[]{"itemstudio"}),
+                "/devtool itemstudio should not throw");
+
+        Assertions.assertEquals(
+                54,
+                player.getOpenInventory().getTopInventory().getSize(),
+                "player should be viewing the 54-slot Item Studio");
+    }
+
+    @Test
+    @DisplayName("/devtool entitystudio by a player opens the 54-slot studio without crashing")
+    public void entityStudioByPlayerOpensMenu() {
+        Player player = addPlayer("Pinont");
+
+        Assertions.assertDoesNotThrow(
+                () -> command.execute(player, new String[]{"entitystudio"}),
+                "/devtool entitystudio should not throw");
+
+        Assertions.assertEquals(
+                54,
+                player.getOpenInventory().getTopInventory().getSize(),
+                "player should be viewing the 54-slot Entity Studio");
+    }
+
+    @Test
+    @DisplayName("/devtool snippet with an empty hand reports hold-an-item without crashing")
+    public void snippetEmptyHandDoesNotThrow() {
+        Player player = addPlayer("Pinont");
+
+        Assertions.assertDoesNotThrow(
+                () -> command.execute(player, new String[]{"snippet"}),
+                "/devtool snippet should not throw");
+    }
+
+    @Test
+    @DisplayName("/devtool snippet by console is players-only")
+    public void snippetByConsoleIsPlayersOnly() {
+        ConsoleCommandSender console = server.getConsoleSender();
+
+        Assertions.assertDoesNotThrow(
+                () -> command.execute(console, new String[]{"snippet"}),
+                "/devtool snippet by console should not throw");
+
+        Assertions.assertTrue(
+                sawMessageContaining((MessageTarget) console, "Players only"),
+                "console should have received the players-only message");
+    }
 }

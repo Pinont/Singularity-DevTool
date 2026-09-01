@@ -29,10 +29,9 @@ Root package: `com.github.pinont.devtool` (26 files)
 - `DevTool.java` — entry point; extends `CorePlugin`, empty `onPluginStart/Stop` (everything registers via lib mechanisms)
 - `api/CItemManager.java` — wrapper over lib's CustomItemManager used by menus
 - `items/Tool.java` — the dev tool item players hold to open the tool
-- `commands/` — `/devtool`, `/flyspeed`, `/vanish` (`SimpleCommand` style)
-- `events/ChatEvent.java` — chat capture (used by world-name input flows)
-- `methods/` — one-off helpers: `CreateWorld`, `ProperWorldName`, `SendChat`, `Blank`, world-creator UI builders, `WorldDeleteButton`
-- `menu/DevToolMenu.java` + `menu/submenu/*` (11 menus) — the whole GUI surface: main menu, player management (server/specific player, kick/ban approvals), world management (server worlds, single world, creator, delete approval), custom items, other tools
+- `commands/` — `/devtool`, `/flyspeed`, `/vanish` (`SimpleCommand` / `CommandGroup` style)
+- `methods/` — one-off helpers: `CreateWorld`, `ProperWorldName`, `StartConversation`, `PromptWorldInput`, snippet export (`ItemSnippet`, `EntitySnippet`, `ExportSnippet`), world-creator UI builders, `WorldDeleteButton`
+- `menu/DevToolMenu.java` + `menu/submenu/*` — the whole GUI surface: main menu, player management, world management, Item Studio / Entity Studio (snippet export), config editor, custom items, other tools
 
 Resource: `src/main/resources/paper-plugin.yml` — declares `name: SingularityDevTool`, `main: com.github.pinont.devtool.DevTool`, `api-version: '26.2'`, and `folia-supported: true`.
 
@@ -53,9 +52,9 @@ Source migrated to the lib v2 signatures:
 ## Known issues / tech debt (observed)
 1. ~~`paper-plugin.yml` name mismatch~~ — fixed on `rework/v2`: renamed to `SingularityDevTool`.
 2. ~~Stale dependency version~~ — fixed on `rework/v2`: `${singularity.version}=2.0.0-SNAPSHOT` tracking the lib v2 line.
-3. Chat-input flows (`ChatEvent` + `SendChat`) are fragile global state — replace with conversation API (Paper `ConversationFactory`) during rework.
+3. ~~Chat-input flows (`ChatEvent` + `SendChat`) are fragile global state~~ — replaced with Paper `ConversationFactory` via `StartConversation` / `PromptWorldInput` (world name/border/seed and config-editor string keys). Type `cancel` to abort.
 4. Menus rebuild state imperatively per open; no shared pagination abstraction yet (lib roadmap item).
-5. Test coverage: MockBukkit smoke + command-dispatch + registration tests exist under `src/test/java` (see `DevToolCommandTest`, `DevToolRegistrationTest`, `DevToolTest`). Deeper menu/click-simulation coverage is still thin by design (MockBukkit inventory clicks are flaky).
+5. Test coverage: MockBukkit smoke + command-dispatch + registration tests exist under `src/test/java` (see `DevToolCommandTest`, `DevToolRegistrationTest`, `DevToolTest`). Snippet generation and conversation-start are covered without inventory-click simulation.
 
 ## Agent guidance
 - New features in Java, wired through SingularityLib APIs (`CorePlugin`, `SimpleCommand`, `Menu`) rather than raw Bukkit where possible.

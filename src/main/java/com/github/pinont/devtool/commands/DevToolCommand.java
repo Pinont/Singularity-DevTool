@@ -23,6 +23,8 @@ public class DevToolCommand extends CommandGroup {
     public DevToolCommand() {
         registerSubcommand(new HelpSub());
         registerSubcommand(new ItemStudioSub());
+        registerSubcommand(new EntityStudioSub());
+        registerSubcommand(new SnippetSub());
         registerSubcommand(new RecipeSub());
         registerSubcommand(new ConfigSub());
         registerSubcommand(new InspectSub());
@@ -89,6 +91,56 @@ public class DevToolCommand extends CommandGroup {
         public void execute(CommandSender sender, String[] args) {
             if (sender instanceof Player player) {
                 com.github.pinont.devtool.menu.submenu.ItemStudioMenu.open(player);
+            } else {
+                sender.sendMessage(Component.text("Players only.", NamedTextColor.RED));
+            }
+        }
+    }
+
+    /**
+     * /devtool entitystudio — open the Entity Studio type picker.
+     */
+    static class EntityStudioSub extends SubCommand {
+
+        @Override
+        public String getName() {
+            return "entitystudio";
+        }
+
+        @Override
+        public String getDescription() {
+            return "Open the Entity Studio (spawn-snippet tool)";
+        }
+
+        @Override
+        public void execute(CommandSender sender, String[] args) {
+            if (sender instanceof Player player) {
+                com.github.pinont.devtool.menu.submenu.EntityStudioMenu.open(player);
+            } else {
+                sender.sendMessage(Component.text("Players only.", NamedTextColor.RED));
+            }
+        }
+    }
+
+    /**
+     * /devtool snippet — export a Java snippet for the held item.
+     */
+    static class SnippetSub extends SubCommand {
+
+        @Override
+        public String getName() {
+            return "snippet";
+        }
+
+        @Override
+        public String getDescription() {
+            return "Export a Java snippet for the item in your hand";
+        }
+
+        @Override
+        public void execute(CommandSender sender, String[] args) {
+            if (sender instanceof Player player) {
+                com.github.pinont.devtool.methods.ExportSnippet.fromHeldItem(player);
             } else {
                 sender.sendMessage(Component.text("Players only.", NamedTextColor.RED));
             }

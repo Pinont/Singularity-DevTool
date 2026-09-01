@@ -8,7 +8,6 @@ import com.github.pinont.singularitylib.api.ui.Menu;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import static com.github.pinont.singularitylib.plugin.CorePlugin.getInstance;
 
@@ -65,49 +64,8 @@ public class GetWorldCreatorMenu {
 
                             @Override
                             public void onClick(Player player) {
-                                player.sendMessage(ChatColor.GRAY + "Please send a world name into chat.");
-                                player.setMetadata("devTool", new FixedMetadataValue(getInstance(), new WorldCreatorContent() {
-                                    @Override
-                                    public String getInputContent() {
-                                        return "worldName";
-                                    }
-
-                                    @Override
-                                    public String getWorldName() {
-                                        return name;
-                                    }
-
-                                    @Override
-                                    public World.Environment getEnvironment() {
-                                        return environment;
-                                    }
-
-                                    @Override
-                                    public WorldType getWorldType() {
-                                        return worldType;
-                                    }
-
-                                    @Override
-                                    public boolean getGenerateStructure() {
-                                        return generate_structure;
-                                    }
-
-                                    @Override
-                                    public int getBorderSize() {
-                                        return borderSize;
-                                    }
-
-                                    @Override
-                                    public Difficulty getDifficulty() {
-                                        return difficulty;
-                                    }
-
-                                    @Override
-                                    public Long getSeed() {
-                                        return seed;
-                                    }
-                                }));
-                                player.closeInventory();
+                                PromptWorldInput.worldName(player, name, environment, worldType,
+                                        generate_structure, borderSize, difficulty, seed);
                             }
                         }),
                 new Layout('e', new Button() { // environment
@@ -165,49 +123,8 @@ public class GetWorldCreatorMenu {
 
                             @Override
                             public void onClick(Player player) {
-                                player.sendMessage(ChatColor.GRAY + "Please send a world border size into chat.");
-                                player.setMetadata("devTool", new FixedMetadataValue(getInstance(), new WorldCreatorContent() {
-                                    @Override
-                                    public String getInputContent() {
-                                        return "worldBorder";
-                                    }
-
-                                    @Override
-                                    public String getWorldName() {
-                                        return name;
-                                    }
-
-                                    @Override
-                                    public World.Environment getEnvironment() {
-                                        return environment;
-                                    }
-
-                                    @Override
-                                    public WorldType getWorldType() {
-                                        return worldType;
-                                    }
-
-                                    @Override
-                                    public boolean getGenerateStructure() {
-                                        return generate_structure;
-                                    }
-
-                                    @Override
-                                    public int getBorderSize() {
-                                        return borderSize;
-                                    }
-
-                                    @Override
-                                    public Difficulty getDifficulty() {
-                                        return difficulty;
-                                    }
-
-                                    @Override
-                                    public Long getSeed() {
-                                        return seed;
-                                    }
-                                }));
-                                player.closeInventory();
+                                PromptWorldInput.worldBorder(player, name, environment, worldType,
+                                        generate_structure, borderSize, difficulty, seed);
                             }
                         }),
                 new Layout('s', new Button() { // seed? def = default
@@ -218,49 +135,8 @@ public class GetWorldCreatorMenu {
 
                             @Override
                             public void onClick(Player player) {
-                                player.sendMessage(ChatColor.GRAY + "Please send a seed number into chat.");
-                                player.setMetadata("devTool", new FixedMetadataValue(getInstance(), new WorldCreatorContent() {
-                                    @Override
-                                    public String getInputContent() {
-                                        return "worldSeed";
-                                    }
-
-                                    @Override
-                                    public String getWorldName() {
-                                        return name;
-                                    }
-
-                                    @Override
-                                    public World.Environment getEnvironment() {
-                                        return environment;
-                                    }
-
-                                    @Override
-                                    public WorldType getWorldType() {
-                                        return worldType;
-                                    }
-
-                                    @Override
-                                    public boolean getGenerateStructure() {
-                                        return generate_structure;
-                                    }
-
-                                    @Override
-                                    public int getBorderSize() {
-                                        return borderSize;
-                                    }
-
-                                    @Override
-                                    public Difficulty getDifficulty() {
-                                        return difficulty;
-                                    }
-
-                                    @Override
-                                    public Long getSeed() {
-                                        return seed;
-                                    }
-                                }));
-                                player.closeInventory();
+                                PromptWorldInput.worldSeed(player, name, environment, worldType,
+                                        generate_structure, borderSize, difficulty, seed);
                             }
                         }),
                 new Layout('c', new Button() { // create button
