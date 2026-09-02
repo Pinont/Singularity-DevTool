@@ -20,8 +20,8 @@ mvn clean package          # shaded jar into target/ (JDK 25 required)
 ```
 - Requires **JDK 25** (`java.version=25`), targets **Paper API `26.2.build.N-stable`**.
 - Depends on `io.github.pinont:singularitylib:2.0.0-SNAPSHOT` via the `${singularity.version}` property — pinned to the lib's v2 line.
-- Resolves SingularityLib from the **public registry** (`https://raw.githubusercontent.com/Pinont/singularity-maven/gh-pages/`) — no auth required; Paper from `repo.papermc.io`. Source compiles against lib `2.0.0-SNAPSHOT` from this registry as of the v2 API migration (see below).
-- **Bootstrap model:** SingularityLib is NOT bundled into this jar. Dependency scope is `provided`, and `maven-shade-plugin` `artifactSet` excludes `com.github.pinont:SingularityLib`. At runtime the lib ships as its own plugin on the server.
+- Resolves SingularityLib from **GitHub Packages** (`https://maven.pkg.github.com/Pinont/SingularityLib`, repository id `github-pinont`). Auth is required even for the public package: CI uses `GITHUB_TOKEN` via `.github/workflows/build.yml` (`packages: read` + `mvn -s settings.xml`); locally put a PAT with `read:packages` in `~/.m2/settings.xml` under `<server><id>github-pinont</id>`. Paper API comes from `repo.papermc.io`. Do not resolve the lib from `maven.pinont.me` (stale Aug 28 SNAPSHOT).
+- **Bootstrap model:** SingularityLib is NOT bundled into this jar. Dependency scope is `provided`, and `maven-shade-plugin` `artifactSet` excludes `io.github.pinont:singularitylib`. At runtime the lib ships as its own plugin on the server.
 
 ## Code layout
 Root package: `com.github.pinont.devtool` (26 files)

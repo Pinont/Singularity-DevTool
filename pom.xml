@@ -12,9 +12,8 @@
     <name>SingularityPlugin</name>
 
     <properties>
-        <!-- v2 line: tracks SingularityLib rework/v2 branch. NOT published yet,
-             so resolution fails until the lib publishes 2.0.0-SNAPSHOT to
-             GitHub Packages. Accepted for this pass. -->
+        <!-- v2 line: io.github.pinont:singularitylib from GitHub Packages
+             (repository id github-pinont). -->
         <singularity.version>2.0.0-SNAPSHOT</singularity.version>
         <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -73,20 +72,21 @@
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
-        <!-- GitHub Packages: primary home for SingularityLib artifacts.
-             Concrete repo path required (GitHub Packages has no wildcard
-             group URLs); matches SingularityLib distributionManagement. -->
-        <!-- Public token-free registry (GitHub Pages via raw.githubusercontent).
-             See Pinont/singularity-maven. -->
+        <!-- GitHub Packages: snapshots for io.github.pinont:singularitylib.
+             id must match setup-java server-id / settings.xml <server><id>.
+             Auth required (even for public packages): GITHUB_TOKEN in CI,
+             or a PAT with read:packages in ~/.m2/settings.xml locally. -->
         <repository>
-            <id>singularity</id>
-            <url>https://maven.pinont.me/</url>
+            <id>github-pinont</id>
+            <url>https://maven.pkg.github.com/Pinont/SingularityLib</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
             <releases>
                 <enabled>true</enabled>
             </releases>
         </repository>
-        <!-- (jitpack.io legacy repo removed — lib v2 publishes to Maven Central
-             for releases and maven.pinont.me for snapshots.) -->
     </repositories>
 
     <dependencies>

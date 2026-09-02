@@ -38,7 +38,8 @@ dependencies:
 
 Get the latest lib release from
 [central.sonatype.com/artifact/io.github.pinont/singularitylib](https://central.sonatype.com/artifact/io.github.pinont/singularitylib),
-or dev snapshots from https://maven.pinont.me.
+or dev snapshots from GitHub Packages
+(`https://maven.pkg.github.com/Pinont/SingularityLib`, repo id `github-pinont`).
 
 ## Development roadmap (v2)
 DevTool v2 becomes an in-server IDE for Singularity plugins: auto-discovers all loaded

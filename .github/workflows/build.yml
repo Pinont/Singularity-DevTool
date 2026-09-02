@@ -10,30 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v4
-
-      # maven.pinont.me's 2.0.0-SNAPSHOT is the Central 2.0.0 line (no PaginatedMenu /
-      # CommandGroup / Attributes). DevTool v2 compiles against current lib main.
-      # Install that source locally so CI matches; do not shade the lib into this jar.
-      - name: Checkout SingularityLib (compile-time API)
-        uses: actions/checkout@v4
-        with:
-          repository: Pinont/SingularityLib
-          ref: main
-          path: .ci/singularitylib
-
-      - name: Setup JDK 25
+      - name: Setup JDK 25 (+ maven settings for GitHub Packages)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '25'
           cache: maven
-
-      - name: Install SingularityLib 2.0.0-SNAPSHOT locally
-        run: |
-          mvn -B -DskipTests install -f .ci/singularitylib/singularitylib-processor/pom.xml
-          mvn -B -DskipTests install -f .ci/singularitylib/pom.xml
-
-      - name: Build (compile + test against local lib snapshot)
-        run: mvn -B -nsu clean package
+          # Must match pom.xml <repository><id>github-pinont</id>
+          server-id: github-pinont
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+          settings-path: ${{ github.workspace }}
+      # Resolves io.github.pinont:singularitylib:2.0.0-SNAPSHOT from
+      # https://maven.pkg.github.com/Pinont/SingularityLib using this
+      # workflow's GITHUB_TOKEN (packages:read). setup-java writes
+      # settings.xml with <server><id>github-pinont</id> and
+      # ${env.GITHUB_TOKEN}; pass it with -s so Maven actually uses it.
+      - name: Build (full compile against lib snapshot)
+        run: mvn -B -U clean package -s ${{ github.workspace }}/settings.xml
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
