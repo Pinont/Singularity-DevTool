@@ -18,12 +18,18 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
-          server-id: github-pinont   # must match the <id> of the GH Packages repo in pom.xml
+          cache: maven
+          # Must match pom.xml <repository><id>github-pinont</id>
+          server-id: github-pinont
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
           settings-path: ${{ github.workspace }}
-      # EXPERIMENT: resolves SingularityLib 2.0.0-SNAPSHOT from GitHub Packages using
-      # this repo's own GITHUB_TOKEN — tests whether cross-repo same-user reads are
-      # allowed by default without a manual package-access grant.
+      # Resolves io.github.pinont:singularitylib:2.0.0-SNAPSHOT from
+      # https://maven.pkg.github.com/Pinont/SingularityLib using this
+      # workflow's GITHUB_TOKEN (packages:read). setup-java writes
+      # settings.xml with <server><id>github-pinont</id> and
+      # ${env.GITHUB_TOKEN}; pass it with -s so Maven actually uses it.
       - name: Build (full compile against lib snapshot)
-        run: mvn -B clean package
+        run: mvn -B -U clean package -s ${{ github.workspace }}/settings.xml
         env:
           GITHUB_TOKEN: ${{ github.token }}
