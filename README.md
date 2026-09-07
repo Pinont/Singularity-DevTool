@@ -41,6 +41,10 @@ Get the latest lib release from
 or dev snapshots from GitHub Packages
 (`https://maven.pkg.github.com/Pinont/SingularityLib`, repo id `github-pinont`).
 
+In-game click paths for Item Studio export and World Creator conversations:
+[`docs/examples/`](docs/examples/README.md). Consumer Java snippets live in
+[SingularityLib `docs/examples/`](https://github.com/Pinont/SingularityLib/blob/main/docs/examples/README.md).
+
 ## Development roadmap (v2)
 DevTool v2 becomes an in-server IDE for Singularity plugins: auto-discovers all loaded
 Singularity plugins, bridges their commands under `/devtool <plugin> <cmd>`, GUI config
