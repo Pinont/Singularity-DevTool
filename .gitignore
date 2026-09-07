@@ -96,6 +96,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# setup-java writes this into the workspace on CI (settings-path)
+/settings.xml
+
 target/
 
 pom.xml.tag
